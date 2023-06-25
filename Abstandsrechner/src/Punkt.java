@@ -1,4 +1,8 @@
 
 public class Punkt {
-public List<int> 
+	public list<int> eintraege = new ArrayList<>();
+
+	public Punkt ConvertStringToPoint() {
+		
+	}
 }

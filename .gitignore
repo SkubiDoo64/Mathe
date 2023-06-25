@@ -37,3 +37,4 @@ replay_pid*
 
 *.iml
 *.idea
+/bin/
