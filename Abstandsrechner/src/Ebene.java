@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Ebene {
 	List<Integer> StuetsVectorParameter;
@@ -15,32 +17,37 @@ public class Ebene {
 
 	/// Reinkommender String beispiel (1,1,1)+s(3,2,5)+r(1,2,3)
 	public void ConvertStringToEbene(String str) {
-		String[] einzelneComponenten = str.split("\\+");
-
-		for (int i = 0; i < einzelneComponenten.length; i++) {
-			einzelneComponenten[i] = einzelneComponenten[i].replaceAll("[A-Za-z \\(\\)]", "");
-		}
+		
+		//Wird benötigt um herrauszufinden ob der erste eintrag ein stütz oder Richtungsvector ist
+		Pattern suchpattern = Pattern.compile("[a-zA-Z]");
+		String[] einzelneComponenten = str.split("\\)");
+		
 
 		for (int i = 0; i < einzelneComponenten.length; i++) {
 			String string = einzelneComponenten[i];
-			String[] strArray = string.split(",");
+			
+			Matcher matcher = suchpattern.matcher(string);
+			String[] strArray = meinReplace(string).split(",");
+			if (!matcher.find()) {
 
-			if (i == 0) {
 				for (String nummer : strArray) {
 					StuetsVectorParameter.add(Integer.parseInt(nummer));
 				}
-			}
-			if (i == 1) {
+			}else if (matcher.find()&&RichtungsVectorParameter1.isEmpty()) {
 				for (String nummer : strArray) {
+					nummer = meinReplace(nummer);
 					RichtungsVectorParameter1.add(Integer.parseInt(nummer));
 				}
-			}
-			if (i == 2) {
+			}else {
 				for (String nummer : strArray) {
+					nummer = meinReplace(nummer);
 					RichtungsVectorParameter1.add(Integer.parseInt(nummer));
 				}
 			}
 		}
-
+	}
+	private String meinReplace(String str) {
+		str = str.replaceAll("[A-Za-z \\(\\)]", "");
+		return str;
 	}
 }
