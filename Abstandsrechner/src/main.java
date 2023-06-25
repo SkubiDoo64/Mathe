@@ -7,7 +7,7 @@ public class main {
 		System.out.print("Punkt Gerade:");
 		Punkt point = new Punkt();
 		
-		String strTest = scanner.next();
+		String strTest = scanner.nextLine();
 		
 	}
 }
