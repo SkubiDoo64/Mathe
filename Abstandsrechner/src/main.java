@@ -9,11 +9,5 @@ public class main {
 		
 		String strTest = scanner.next();
 		
-		point.ConvertStringToPunkt(strTest);
-		
-		for (int entry : point.StuetsVectorParameter) {
-			System.out.print(entry + " \n");
-		}
 	}
-
 }
