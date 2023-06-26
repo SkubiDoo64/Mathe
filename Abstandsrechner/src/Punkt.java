@@ -2,13 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Punkt {
-	List<Integer> StuetsVectorParameter;
-
-	public Punkt()
-	{
-		StuetsVectorParameter = new ArrayList<Integer>();
-	}
+	Vektor StuetsVectorParameter;
 	
+	public Punkt() {
+		StuetsVectorParameter = new Vektor();
+	}
 	public void ConvertStringToPunkt(String str) {
 		str = str.replace("(","");
 		str = str.replace(")","");
@@ -16,7 +14,7 @@ public class Punkt {
 		String[] strArray = str.split(",");
 		
 		for (String nummer : strArray) {			
-			StuetsVectorParameter.add(Integer.parseInt(nummer));
+			StuetsVectorParameter.Werte.add(Integer.parseInt(nummer));
 		}
 	}
 }
