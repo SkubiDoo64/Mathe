@@ -5,13 +5,21 @@ public class Rechner {
 
 	/// (1,1,1)+s(3,2,5)+r(1,2,3)
 	/// (5,2,1)
-	public static int BerechneAbstand(Punkt punkt, Ebene ebene) {
+	public static double BerechneAbstand(Punkt punkt, Ebene ebene) {
 
 		Vektor normalenVector = BerechneNormalenvectorEbene(ebene);
+
+		Gerade hilfsgerade = new Gerade();
+		hilfsgerade.StuetsVectorParameter = punkt.StuetsVectorParameter;
+		hilfsgerade.RichtungsVectorParameter = normalenVector;
+
+		BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
+
 		Vektor differenzVektor = VectorSubtraction(punkt.StuetsVectorParameter, ebene.StuetsVectorParameter);
 		Vektor produktVektor = VectorMultiplikation(normalenVector, differenzVektor);
 
-		return 0;
+		double result = BetragBerechnen(produktVektor) / BetragBerechnenVektor(normalenVector);
+		return result;
 	}
 
 	public static int BerechneAbstand() {
@@ -19,6 +27,117 @@ public class Rechner {
 		return 0;
 	}
 
+	// Ebene und Gerade gleichsetzen.
+	private static Punkt BerechneGeradeEbeneSchnittpunkt(Gerade gerade, Ebene ebene) {
+		Punkt schnittPunkt = new Punkt();
+		
+		for (int i = 0; i < gerade.RichtungsVectorParameter.Werte.size(); i++) {
+			
+		}
+		
+		/// GausAlgorithmus;
+
+		List<List<Integer>> zeilen = new ArrayList<>();
+
+		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {
+			List<Integer> neueZeile = new ArrayList<Integer>();
+
+			/// vor dem gleichzeichen
+			neueZeile.add(-1 * gerade.RichtungsVectorParameter.Werte.get(i));
+			neueZeile.add(ebene.RichtungsVectorParameter1.Werte.get(i));
+			neueZeile.add(ebene.RichtungsVectorParameter2.Werte.get(i));
+
+			/// hinter dem gleichzeichen
+			neueZeile.add(gerade.StuetsVectorParameter.Werte.get(i) - ebene.StuetsVectorParameter.Werte.get(i));
+
+			zeilen.add(neueZeile);
+		}
+
+		// wert mit der die zweite zeile multipliziert werden muss
+		int wert1 = zeilen.get(2).get(0);
+
+		// wert mit der die dritte zeile mulipliziert werden muss
+		int wert2 = zeilen.get(1).get(0);
+
+		// multiplizieren zweite und dritte mit dem wert und subtrahiere dann die dritte
+		// zeile von der zweiten.
+		for (int i = 0; i < zeilen.get(0).size(); i++) {
+			zeilen.get(1).set(i, zeilen.get(1).get(i) * wert1);
+			zeilen.get(2).set(i, zeilen.get(2).get(i) * wert2);
+			// dritte von der zweiten abziehen;
+			zeilen.get(1).set(i, zeilen.get(1).get(i) - zeilen.get(2).get(i));
+
+			// zurücksetzen der 3. zeile
+			zeilen.get(2).set(i, zeilen.get(2).get(i) / wert2);
+		}
+
+		// wert 3. zeile multiplizieren
+		wert1 = zeilen.get(0).get(0);
+		// wert 1. zeile multiplizieren
+		wert2 = zeilen.get(2).get(0);
+
+		// multiplizieren 1.und 3. mit dem wert und subtrahiere dann die 1.
+		// zeile von der zweiten.
+		for (int i = 0; i < zeilen.get(0).size(); i++) {
+			zeilen.get(2).set(i, zeilen.get(2).get(i) * wert1);
+			zeilen.get(0).set(i, zeilen.get(0).get(i) * wert2);
+			// dritte von der zweiten abziehen;
+			zeilen.get(2).set(i, zeilen.get(2).get(i) - zeilen.get(0).get(i));
+
+			// zurücksetzen der 3. zeile
+			zeilen.get(0).set(i, zeilen.get(0).get(i) / wert2);
+		}
+
+		// wert 2. zeile multiplizieren
+		wert1 = zeilen.get(2).get(1);
+		// wert 3. zeile multiplizieren
+		wert2 = zeilen.get(1).get(1);
+
+		// multiplizieren 1.und 3. mit dem wert und subtrahiere dann die 2.
+		// zeile von der zweiten.
+		for (int i = 0; i < zeilen.get(0).size(); i++) {
+			zeilen.get(1).set(i, zeilen.get(1).get(i) * wert1);
+			zeilen.get(2).set(i, zeilen.get(2).get(i) * wert2);
+			// 2. von der 3. abziehen;
+			zeilen.get(2).set(i, zeilen.get(2).get(i) - zeilen.get(1).get(i));
+
+			// zurücksetzen der 3. zeile
+			zeilen.get(1).set(i, zeilen.get(1).get(i) / wert2);
+		}
+
+		
+		
+		//Punkte berechnen:
+		//3. punkt
+		
+		
+		return schnittPunkt;
+	}
+
+	/// Hier wird der Betrag eines ergebnisses einer Vektor multiplication berechnet
+	private static double BetragBerechnen(Vektor vektor) {
+		double betrag = 0;
+
+		for (int zahl : vektor.Werte) {
+			betrag = betrag + zahl;
+		}
+		;
+		double quadratzahl = betrag * betrag;
+		return Math.sqrt(quadratzahl);
+	}
+
+	private static double BetragBerechnenVektor(Vektor vektor) {
+		double betrag = 0;
+
+		for (int zahl : vektor.Werte) {
+			double quadratzahl = zahl * zahl;
+			betrag = betrag + quadratzahl;
+		}
+		;
+		return Math.sqrt(betrag);
+	}
+
+///Berechnet einen Vektor wenn Zwei Vektoren mit einander Multipliziert werden.
 	private static Vektor VectorMultiplikation(Vektor vector1, Vektor vector2) {
 		Vektor result = new Vektor();
 

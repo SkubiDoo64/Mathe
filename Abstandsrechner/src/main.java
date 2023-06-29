@@ -7,10 +7,10 @@ public class main {
 
 		System.out.print("Punkt:");
 		Punkt point = new Punkt();
-		point.ConvertStringToPunkt("(6,0,3)");
+		point.ConvertStringToPunkt("(6,10,2)");
 		
 		Ebene ebene = new Ebene();
-		ebene.ConvertStringToEbene("(0,2,4)+s(2,2,4)+r(1,0,-1)");
+		ebene.ConvertStringToEbene("(3,1,2)+s(1,1,6)+r(1,0,2)");
 		
 		System.out.println(Rechner.BerechneAbstand(point, ebene));
 	}
