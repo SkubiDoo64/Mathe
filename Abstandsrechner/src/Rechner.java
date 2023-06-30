@@ -13,7 +13,7 @@ public class Rechner {
 		hilfsgerade.StuetsVectorParameter = punkt.StuetsVectorParameter;
 		hilfsgerade.RichtungsVectorParameter = normalenVector;
 
-		BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
+		Punkt schnittpunkt = BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
 
 		Vektor differenzVektor = VectorSubtraction(punkt.StuetsVectorParameter, ebene.StuetsVectorParameter);
 		Vektor produktVektor = VectorMultiplikation(normalenVector, differenzVektor);
@@ -30,11 +30,7 @@ public class Rechner {
 	// Ebene und Gerade gleichsetzen.
 	private static Punkt BerechneGeradeEbeneSchnittpunkt(Gerade gerade, Ebene ebene) {
 		Punkt schnittPunkt = new Punkt();
-		
-		for (int i = 0; i < gerade.RichtungsVectorParameter.Werte.size(); i++) {
-			
-		}
-		
+
 		/// GausAlgorithmus;
 
 		List<List<Integer>> zeilen = new ArrayList<>();
@@ -43,9 +39,9 @@ public class Rechner {
 			List<Integer> neueZeile = new ArrayList<Integer>();
 
 			/// vor dem gleichzeichen
-			neueZeile.add(-1 * gerade.RichtungsVectorParameter.Werte.get(i));
 			neueZeile.add(ebene.RichtungsVectorParameter1.Werte.get(i));
 			neueZeile.add(ebene.RichtungsVectorParameter2.Werte.get(i));
+			neueZeile.add(-1 * gerade.RichtungsVectorParameter.Werte.get(i));
 
 			/// hinter dem gleichzeichen
 			neueZeile.add(gerade.StuetsVectorParameter.Werte.get(i) - ebene.StuetsVectorParameter.Werte.get(i));
@@ -105,12 +101,21 @@ public class Rechner {
 			zeilen.get(1).set(i, zeilen.get(1).get(i) / wert2);
 		}
 
+		// Punkte berechnen:
+		// 3. punkt
+		int punkt3 = zeilen.get(2).get(3) / zeilen.get(2).get(2);
+		int punkt2 = zeilen.get(1).get(3) - zeilen.get(1).get(2) * punkt3;
+		punkt2 = punkt2 / zeilen.get(1).get(1);
+		int punkt1 = zeilen.get(0).get(3)-(zeilen.get(0).get(2)*punkt3 +zeilen.get(0).get(1)*punkt2);
+		punkt1 = punkt1 / zeilen.get(0).get(0);
 		
+		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {			
+			schnittPunkt.StuetsVectorParameter.Werte.add(gerade.StuetsVectorParameter.Werte.get(i)+punkt3* gerade.RichtungsVectorParameter.Werte.get(i));
+		}
 		
-		//Punkte berechnen:
-		//3. punkt
-		
-		
+		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
+		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
+		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
 		return schnittPunkt;
 	}
 
