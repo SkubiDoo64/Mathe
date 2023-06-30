@@ -13,7 +13,7 @@ public class Rechner {
 		hilfsgerade.StuetsVectorParameter = punkt.StuetsVectorParameter;
 		hilfsgerade.RichtungsVectorParameter = normalenVector;
 
-		BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
+		Punkt schnittpunkt = BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
 
 		Vektor differenzVektor = VectorSubtraction(punkt.StuetsVectorParameter, ebene.StuetsVectorParameter);
 		Vektor produktVektor = VectorMultiplikation(normalenVector, differenzVektor);
@@ -108,9 +108,14 @@ public class Rechner {
 		punkt2 = punkt2 / zeilen.get(1).get(1);
 		int punkt1 = zeilen.get(0).get(3)-(zeilen.get(0).get(2)*punkt3 +zeilen.get(0).get(1)*punkt2);
 		punkt1 = punkt1 / zeilen.get(0).get(0);
-		schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
-		schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
-		schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
+		
+		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {			
+			schnittPunkt.StuetsVectorParameter.Werte.add(gerade.StuetsVectorParameter.Werte.get(i)+punkt3* gerade.RichtungsVectorParameter.Werte.get(i));
+		}
+		
+		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
+		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
+		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
 		return schnittPunkt;
 	}
 
