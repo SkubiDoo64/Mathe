@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Rechner {
@@ -15,13 +16,50 @@ public class Rechner {
 
 		Punkt schnittpunkt = BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
 
-		Vektor ps = VectorSubtraction(schnittpunkt.StuetsVectorParameter,punkt.StuetsVectorParameter );
+		Vektor ps = VectorSubtraction(schnittpunkt.StuetsVectorParameter, punkt.StuetsVectorParameter);
 		return BetragBerechnenVektor(ps);
+	}
+
+	public static double BerechneAbstand(Gerade gerade, Gerade gerade2) {
+
+		boolean parallel = ProofVektorVielfachVonEinander(gerade.RichtungsVectorParameter,
+				gerade2.RichtungsVectorParameter);
+
+		if (parallel) {
+
+		} else {
+
+		}
+		double test = 0;
+		return test;
 	}
 
 	public static int BerechneAbstand() {
 
 		return 0;
+	}
+
+	private static boolean ProofVektorVielfachVonEinander(Vektor vektor1, Vektor vektor2) {
+		boolean vielfaches = false;
+
+		for (int i = 0; i < vektor1.Werte.size(); i++) {
+			int wert1 = vektor1.Werte.get(i);
+			int wert2 = vektor2.Werte.get(i);
+			if (wert1 == 0 && wert2 == 0) {
+				vielfaches = true;
+			} else if (wert1 != 0 && wert2 != 0) {
+				if (wert1 % wert2 == 0) {
+					vielfaches = true;
+				} else if (wert2 % wert1 == 0) {
+					vielfaches = true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		return vielfaches;
 	}
 
 	// Ebene und Gerade gleichsetzen.
@@ -103,16 +141,17 @@ public class Rechner {
 		int punkt3 = zeilen.get(2).get(3) / zeilen.get(2).get(2);
 		int punkt2 = zeilen.get(1).get(3) - zeilen.get(1).get(2) * punkt3;
 		punkt2 = punkt2 / zeilen.get(1).get(1);
-		int punkt1 = zeilen.get(0).get(3)-(zeilen.get(0).get(2)*punkt3 +zeilen.get(0).get(1)*punkt2);
+		int punkt1 = zeilen.get(0).get(3) - (zeilen.get(0).get(2) * punkt3 + zeilen.get(0).get(1) * punkt2);
 		punkt1 = punkt1 / zeilen.get(0).get(0);
-		
-		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {			
-			schnittPunkt.StuetsVectorParameter.Werte.add(gerade.StuetsVectorParameter.Werte.get(i)+punkt3* gerade.RichtungsVectorParameter.Werte.get(i));
+
+		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {
+			schnittPunkt.StuetsVectorParameter.Werte.add(
+					gerade.StuetsVectorParameter.Werte.get(i) + punkt3 * gerade.RichtungsVectorParameter.Werte.get(i));
 		}
-		
-		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
-		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
-		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
+
+		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
+		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
+		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
 		return schnittPunkt;
 	}
 
