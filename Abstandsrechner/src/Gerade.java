@@ -29,7 +29,7 @@ public class Gerade {
 			for (String nummer : strArray) {
 				nummer = nummer.replace(",", "");
 
-				StuetsVectorParameter.Werte.add(Integer.parseInt(nummer));
+				StuetsVectorParameter.Werte.add(Double.parseDouble(nummer));
 
 			}
 
@@ -43,7 +43,7 @@ public class Gerade {
 			workStr = workStr.replace(")", "");
 			strArray = workStr.split(",");
 			for (String nummer : strArray) {
-				RichtungsVectorParameter.Werte.add(Integer.parseInt(nummer));
+				RichtungsVectorParameter.Werte.add(Double.parseDouble(nummer));
 
 			}
 		} else if (str.matches(".+[(][0-9,]+[)].*")) {
@@ -53,7 +53,7 @@ public class Gerade {
 			String[] strArray = workStr.split(",");
 
 			for (String nummer : strArray) {
-				StuetsVectorParameter.Werte.add(Integer.parseInt(nummer));
+				StuetsVectorParameter.Werte.add(Double.parseDouble(nummer));
 
 			}
 			;
@@ -64,7 +64,7 @@ public class Gerade {
 			workStr = workStr.replace(")", "");
 			strArray = workStr.split(",");
 			for (String nummer : strArray) {
-				RichtungsVectorParameter.Werte.add(Integer.parseInt(nummer));
+				RichtungsVectorParameter.Werte.add(Double.parseDouble(nummer));
 
 			}
 
