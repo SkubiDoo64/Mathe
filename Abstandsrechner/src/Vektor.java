@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vektor {
-	List<Integer> Werte;
+	List<Double> Werte;
 
 	public Vektor() {
-		Werte = new ArrayList<Integer>();
+		Werte = new ArrayList<Double>();
 	}
 }

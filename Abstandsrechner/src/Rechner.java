@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Rechner {
@@ -15,11 +16,22 @@ public class Rechner {
 
 		Punkt schnittpunkt = BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
 
-		Vektor differenzVektor = VectorSubtraction(punkt.StuetsVectorParameter, ebene.StuetsVectorParameter);
-		Vektor produktVektor = VectorMultiplikation(normalenVector, differenzVektor);
+		Vektor ps = VectorSubtraction(schnittpunkt.StuetsVectorParameter, punkt.StuetsVectorParameter);
+		return BetragBerechnenVektor(ps);
+	}
 
-		double result = BetragBerechnen(produktVektor) / BetragBerechnenVektor(normalenVector);
-		return result;
+	public static double BerechneAbstand(Gerade gerade, Gerade gerade2) {
+
+		boolean parallel = ProofVektorVielfachVonEinander(gerade.RichtungsVectorParameter,
+				gerade2.RichtungsVectorParameter);
+
+		if (parallel) {
+
+		} else {
+
+		}
+		double test = 0;
+		return test;
 	}
 
 	public static int BerechneAbstand() {
@@ -50,16 +62,39 @@ public class Rechner {
 	} 
 
 
+	private static boolean ProofVektorVielfachVonEinander(Vektor vektor1, Vektor vektor2) {
+		boolean vielfaches = false;
+
+		for (int i = 0; i < vektor1.Werte.size(); i++) {
+			double wert1 = vektor1.Werte.get(i);
+			double wert2 = vektor2.Werte.get(i);
+			if (wert1 == 0 && wert2 == 0) {
+				vielfaches = true;
+			} else if (wert1 != 0 && wert2 != 0) {
+				if (wert1 % wert2 == 0) {
+					vielfaches = true;
+				} else if (wert2 % wert1 == 0) {
+					vielfaches = true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		return vielfaches;
+	}
+
 	// Ebene und Gerade gleichsetzen.
 	private static Punkt BerechneGeradeEbeneSchnittpunkt(Gerade gerade, Ebene ebene) {
 		Punkt schnittPunkt = new Punkt();
 
 		/// GausAlgorithmus;
 
-		List<List<Integer>> zeilen = new ArrayList<>();
+		List<List<Double>> zeilen = new ArrayList<>();
 
 		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {
-			List<Integer> neueZeile = new ArrayList<Integer>();
+			List<Double> neueZeile = new ArrayList<Double>();
 
 			/// vor dem gleichzeichen
 			neueZeile.add(ebene.RichtungsVectorParameter1.Werte.get(i));
@@ -73,10 +108,10 @@ public class Rechner {
 		}
 
 		// wert mit der die zweite zeile multipliziert werden muss
-		int wert1 = zeilen.get(2).get(0);
+		double wert1 = zeilen.get(2).get(0);
 
 		// wert mit der die dritte zeile mulipliziert werden muss
-		int wert2 = zeilen.get(1).get(0);
+		double wert2 = zeilen.get(1).get(0);
 
 		// multiplizieren zweite und dritte mit dem wert und subtrahiere dann die dritte
 		// zeile von der zweiten.
@@ -126,19 +161,20 @@ public class Rechner {
 
 		// Punkte berechnen:
 		// 3. punkt
-		int punkt3 = zeilen.get(2).get(3) / zeilen.get(2).get(2);
-		int punkt2 = zeilen.get(1).get(3) - zeilen.get(1).get(2) * punkt3;
+		double punkt3 = zeilen.get(2).get(3) / zeilen.get(2).get(2);
+		double punkt2 = zeilen.get(1).get(3) - zeilen.get(1).get(2) * punkt3;
 		punkt2 = punkt2 / zeilen.get(1).get(1);
-		int punkt1 = zeilen.get(0).get(3)-(zeilen.get(0).get(2)*punkt3 +zeilen.get(0).get(1)*punkt2);
+		double punkt1 = zeilen.get(0).get(3) - (zeilen.get(0).get(2) * punkt3 + zeilen.get(0).get(1) * punkt2);
 		punkt1 = punkt1 / zeilen.get(0).get(0);
-		
-		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {			
-			schnittPunkt.StuetsVectorParameter.Werte.add(gerade.StuetsVectorParameter.Werte.get(i)+punkt3* gerade.RichtungsVectorParameter.Werte.get(i));
+
+		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {
+			schnittPunkt.StuetsVectorParameter.Werte.add(
+					gerade.StuetsVectorParameter.Werte.get(i) + punkt3 * gerade.RichtungsVectorParameter.Werte.get(i));
 		}
-		
-		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
-		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
-		//schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
+
+		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
+		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
+		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
 		return schnittPunkt;
 	}
 
@@ -146,7 +182,7 @@ public class Rechner {
 	private static double BetragBerechnen(Vektor vektor) {
 		double betrag = 0;
 
-		for (int zahl : vektor.Werte) {
+		for (double zahl : vektor.Werte) {
 			betrag = betrag + zahl;
 		}
 		;
@@ -157,7 +193,7 @@ public class Rechner {
 	private static double BetragBerechnenVektor(Vektor vektor) {
 		double betrag = 0;
 
-		for (int zahl : vektor.Werte) {
+		for (double zahl : vektor.Werte) {
 			double quadratzahl = zahl * zahl;
 			betrag = betrag + quadratzahl;
 		}
@@ -204,8 +240,8 @@ public class Rechner {
 		}
 
 		for (int i = 0; i < groeße; i++) {
-			int zwischensumme = hilfsvector1.Werte.get(i + 1) * hilfsvector2.Werte.get(i + 2);
-			int zwischensumme2 = hilfsvector1.Werte.get(i + 2) * hilfsvector2.Werte.get(i + 1);
+			double zwischensumme = hilfsvector1.Werte.get(i + 1) * hilfsvector2.Werte.get(i + 2);
+			double zwischensumme2 = hilfsvector1.Werte.get(i + 2) * hilfsvector2.Werte.get(i + 1);
 
 			normalenVector.Werte.add(zwischensumme - zwischensumme2);
 		}

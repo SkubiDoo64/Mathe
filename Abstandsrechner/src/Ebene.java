@@ -31,17 +31,17 @@ public class Ebene {
 			if (!matcher.find()) {
 
 				for (String nummer : strArray) {
-					StuetsVectorParameter.Werte.add(Integer.parseInt(nummer));
+					StuetsVectorParameter.Werte.add(Double.parseDouble(nummer));
 				}
 			} else if (RichtungsVectorParameter1.Werte.isEmpty()) {
 				for (String nummer : strArray) {
 					nummer = meinReplace(nummer);
-					RichtungsVectorParameter1.Werte.add(Integer.parseInt(nummer));
+					RichtungsVectorParameter1.Werte.add(Double.parseDouble(nummer));
 				}
 			} else {
 				for (String nummer : strArray) {
 					nummer = meinReplace(nummer);
-					RichtungsVectorParameter2.Werte.add(Integer.parseInt(nummer));
+					RichtungsVectorParameter2.Werte.add(Double.parseDouble(nummer));
 				}
 			}
 		}

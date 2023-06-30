@@ -14,7 +14,7 @@ public class Punkt {
 		String[] strArray = str.split(",");
 		
 		for (String nummer : strArray) {			
-			StuetsVectorParameter.Werte.add(Integer.parseInt(nummer));
+			StuetsVectorParameter.Werte.add(Double.parseDouble(nummer));
 		}
 	}
 }
