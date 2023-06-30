@@ -15,11 +15,8 @@ public class Rechner {
 
 		Punkt schnittpunkt = BerechneGeradeEbeneSchnittpunkt(hilfsgerade, ebene);
 
-		Vektor differenzVektor = VectorSubtraction(punkt.StuetsVectorParameter, ebene.StuetsVectorParameter);
-		Vektor produktVektor = VectorMultiplikation(normalenVector, differenzVektor);
-
-		double result = BetragBerechnen(produktVektor) / BetragBerechnenVektor(normalenVector);
-		return result;
+		Vektor ps = VectorSubtraction(schnittpunkt.StuetsVectorParameter,punkt.StuetsVectorParameter );
+		return BetragBerechnenVektor(ps);
 	}
 
 	public static int BerechneAbstand() {
