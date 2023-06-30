@@ -26,6 +26,29 @@ public class Rechner {
 
 		return 0;
 	}
+	public static double BerechneAbstand(Punkt punkt, Gerade gerade) {
+//Zunächst muss man das Lotfällen dafür benötigen wir eine Hilfsebene
+	Ebene hilfsebene = new Ebene();
+	// Die Koeffizienten Der ebenengleichung entnehmen wir dem Richtungsvektoren der gerade
+	int x = punkt.StuetsVectorParameter.Werte.get(0);
+	int y = punkt.StuetsVectorParameter.Werte.get(1);
+	int z = punkt.StuetsVectorParameter.Werte.get(2);
+	int r = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);
+	
+	double lamda = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);  
+	double schnittpunktWerte = x * gerade.StuetsVectorParameter.Werte.get(0) + y * gerade.StuetsVectorParameter.Werte.get(1) + z * gerade.StuetsVectorParameter.Werte.get(2) ;
+	lamda = lamda / (r - schnittpunktWerte);
+	
+	Punkt lotfußpunkt = new Punkt();
+	for (int i = 0; i<3;i++) {
+		lotfußpunkt.StuetsVectorParameter.Werte.set(i, (gerade.StuetsVectorParameter.Werte.get(i) + gerade.RichtungsVectorParameter.Werte.get(i) * lamda));
+		
+	}
+	double result;
+	
+	return result;
+	} 
+
 
 	// Ebene und Gerade gleichsetzen.
 	private static Punkt BerechneGeradeEbeneSchnittpunkt(Gerade gerade, Ebene ebene) {
