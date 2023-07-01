@@ -24,14 +24,38 @@ public class Rechner {
 
 		boolean parallel = ProofVektorVielfachVonEinander(gerade.RichtungsVectorParameter,
 				gerade2.RichtungsVectorParameter);
-
+double abstand = 0;
 		if (parallel) {
+			double skalarprodukt = VectorMultiplikation(gerade.RichtungsVectorParameter, gerade.StuetsVectorParameter);
+			for (double wert : gerade2.StuetsVectorParameter.Werte) {
+				skalarprodukt = skalarprodukt - wert;
+			}
+			double x = 0;
+			for (int i = 0; i < gerade2.RichtungsVectorParameter.Werte.size(); i++) {
+				x = x + gerade.RichtungsVectorParameter.Werte.get(i) * gerade2.RichtungsVectorParameter.Werte.get(i);
+			}
+			double gleichungsloesung = skalarprodukt / x;
 
+			// gleichungsloesung in die zeite gerade einsetzen um den punkt zu errechnen;
+			Punkt paralelerPunkt = new Punkt();
+
+			for (int i = 0; i < gerade2.RichtungsVectorParameter.Werte.size(); i++) {
+				paralelerPunkt.StuetsVectorParameter.Werte.add(gerade2.StuetsVectorParameter.Werte.get(i)
+						+ gleichungsloesung * gerade2.RichtungsVectorParameter.Werte.get(i));
+			}
+
+			Vektor verbindungsVektor = VectorSubtraction(paralelerPunkt.StuetsVectorParameter,
+					gerade.StuetsVectorParameter);
+
+			abstand = BetragBerechnenVektor(verbindungsVektor);
 		} else {
-
+			
+			
+			
+			
+			abstand = 0;
 		}
-		double test = 0;
-		return test;
+		return abstand;
 	}
 
 	public static int BerechneAbstand() {
@@ -179,11 +203,11 @@ public class Rechner {
 	}
 
 ///Berechnet einen Vektor wenn Zwei Vektoren mit einander Multipliziert werden.
-	private static Vektor VectorMultiplikation(Vektor vector1, Vektor vector2) {
-		Vektor result = new Vektor();
+	private static double VectorMultiplikation(Vektor vector1, Vektor vector2) {
+		double result = 0;
 
 		for (int i = 0; i < vector1.Werte.size(); i++) {
-			result.Werte.add(vector1.Werte.get(i) * vector2.Werte.get(i));
+			result = result + (vector1.Werte.get(i) * vector2.Werte.get(i));
 		}
 
 		return result;

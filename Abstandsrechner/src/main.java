@@ -18,9 +18,13 @@ public class main {
 		Gerade gerade2 = new Gerade();
 		
 		gerade1.ConvertStringToPunkt("(2,0,1)+s(-4,1,1)");
-		gerade2.ConvertStringToPunkt("(0,5,6)+s(8,2,2)");
+		gerade2.ConvertStringToPunkt("(0,5,6)+s(-8,2,2)");
 		
-		Rechner.BerechneAbstand(gerade1, gerade2);
+		System.out.print(Rechner.BerechneAbstand(gerade1, gerade2));
+
+		gerade1.ConvertStringToPunkt("(2,1,1)+s(1,1,0)");
+		gerade2.ConvertStringToPunkt("(2,0,2)+s(2,0,1)");
+		System.out.print(Rechner.BerechneAbstand(gerade1, gerade2));
 		
 		scanner.close();
 	}
