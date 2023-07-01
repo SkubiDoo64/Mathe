@@ -303,6 +303,82 @@ public class Rechner {
 		return result;
 	}
 
+	public static Vektor BerechneKreuzproduktLaplacescher(List<Vektor> vektoren, int dimensionen) {
+
+		return new Vektor();
+	}
+
+	public static Vektor BerechneKreuzproduktSarrus(List<Vektor> vektoren, int dimensionen) {
+		Vektor kreuzproduktVektor = new Vektor();
+		List<List<Double>> vektorMatrix = new ArrayList<List<Double>>();
+		List<List<Double>> bigMatrix = new ArrayList<List<Double>>();
+
+		for (int i = 0; i < dimensionen; i++) {
+			bigMatrix.add(new ArrayList<Double>());
+
+			for (int a = 0; a < dimensionen - 1; a++) {
+				bigMatrix.get(i).add(vektoren.get(a).Werte.get(i));
+			}
+		}
+
+		for (int i = 0; i < dimensionen; i++) {
+			for (int a = 0; a < dimensionen; a++) {
+				if (i != a) {
+					vektorMatrix.add(bigMatrix.get(a));
+				}
+			}
+		}
+		/// Determinante benutzen Regel von Sarrus
+		for (int i = 0; i < 3 * (vektorMatrix.size() / 3); i = i + 3) {
+			double wert = 1;
+			double determinantepos = 0;
+			double determinantenegativ = 0;
+			for (int a = 0; a < 3; a++) {
+				wert = wert * vektorMatrix.get(0 + i).get(a);
+
+				if (a + 1 < 3) {
+					wert = wert * vektorMatrix.get(1 + i).get(a + 1);
+				} else {
+					wert = wert * vektorMatrix.get(1 + i).get(a + 1 - (3));
+				}
+
+				if (a + 2 < 3) {
+					wert = wert * vektorMatrix.get(2 + i).get(a + 2);
+				} else {
+					wert = wert * vektorMatrix.get(2 + i).get(a + 2 - (3));
+				}
+				determinantepos = determinantepos + wert;
+				wert = 1;
+			}
+			wert = 1;
+			for (int a = 0; a < 3; a++) {
+				wert = wert * vektorMatrix.get(2 + i).get(a);
+
+				if (a + 1 < dimensionen - 1) {
+					wert = wert * vektorMatrix.get(1 + i).get(a + 1);
+				} else {
+					wert = wert * vektorMatrix.get(1 + i).get(a + 1 - (3));
+				}
+
+				if (a + 2 < dimensionen - 1) {
+					wert = wert * vektorMatrix.get(0 + i).get(a + 2);
+				} else {
+					wert = wert * vektorMatrix.get(0 + i).get(a + 2 - (3));
+				}
+				determinantenegativ = determinantenegativ + (-1 * wert);
+				wert = 1;
+			}
+			wert = 1;
+			if ((i / 3) % 2 == 0) {
+				kreuzproduktVektor.Werte.add(determinantepos + determinantenegativ);
+			} else {
+				kreuzproduktVektor.Werte.add(-1 * (determinantepos + determinantenegativ));
+			}
+		}
+
+		return kreuzproduktVektor;
+	}
+
 	private static Vektor BerechneNormalenvectorEbene(Ebene ebene) {
 		Vektor normalenVector = new Vektor();
 		Vektor hilfsvector1 = new Vektor();

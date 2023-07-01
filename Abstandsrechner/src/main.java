@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
@@ -11,9 +13,9 @@ public class main {
 		System.out.println("Für 2. geben Sie bitte eine \"2\" ein:");
 
 		String entscheidung = scanner.nextLine();
-		
-		if (entscheidung.equalsIgnoreCase("1")) {
 
+		if (entscheidung.equalsIgnoreCase("1")) {
+			Kreuzprodukt(scanner);
 		} else if (entscheidung.equals("2")) {
 			Abstand(scanner);
 		} else {
@@ -22,6 +24,44 @@ public class main {
 		}
 
 		scanner.close();
+
+	}
+
+	private static void Kreuzprodukt(Scanner scanner) {
+		System.out.println("In welchem Vektorraum möchten Sie das Kreutzprodukt berechnen Lassen?");
+		System.out.print("N>3 :");
+		// int vektorraum = Integer.parseInt(scanner.nextLine());
+		int vektorraum = 4;
+		System.out.println("Bitte geben Sie die Vektoren in der Folgenden Form an: (1,2,3,...,n)");
+		List<Vektor> vektoren = new ArrayList<Vektor>();
+		for (int i = 0; i < 1; i++) {
+			Punkt punkt = new Punkt();
+			punkt.ConvertStringToPunkt("1,2,0,3");
+			vektoren.add(punkt.StuetsVectorParameter);
+
+			Punkt punkt2 = new Punkt();
+			punkt2.ConvertStringToPunkt("3,2,1,2");
+			vektoren.add(punkt2.StuetsVectorParameter);
+
+			Punkt punkt3 = new Punkt();
+			punkt3.ConvertStringToPunkt("2,1,2,5");
+			vektoren.add(punkt3.StuetsVectorParameter);
+		}
+
+		if (vektorraum == 4) {
+
+			System.out.println("Bei einem deminsionalen Vektor werden die Regeln von Sarrus");
+			System.out.println("Angewant um die Determinanten zu berechnen:");
+			Vektor kreuzVektor = Rechner.BerechneKreuzproduktSarrus(vektoren, vektorraum);
+			for (double vektorParameter : kreuzVektor.Werte) {
+				System.out.println(vektorParameter);
+			}
+		} else {
+			Vektor kreuzVektor = Rechner.BerechneKreuzproduktLaplacescher(vektoren, vektorraum);
+			for (double vektorParameter : kreuzVektor.Werte) {
+				System.out.println(vektorParameter);
+			}
+		}
 
 	}
 
