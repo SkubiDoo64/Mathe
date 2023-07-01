@@ -16,7 +16,7 @@ public class Gerade {
 	public void ConvertStringToGerade(String str) {
 		String workStr = "";
 		// Prüfen pb ein Ortsvektor Vorhanden ist
-		if (str.matches("^[(][0-9,]+[)].+")) {
+		if (str.matches("^[(][0-9,-]+[)].+")) {
 			// Wenn ja StuetzVektorParameter = erstes (***)
 			int klammerEnde = str.indexOf(")");
 			workStr = str.substring(0, klammerEnde);
@@ -46,7 +46,7 @@ public class Gerade {
 				RichtungsVectorParameter.Werte.add(Double.parseDouble(nummer));
 
 			}
-		} else if (str.matches(".+[(][0-9,]+[)].*")) {
+		} else if (str.matches(".+[(][0-9,-]+[)].*")) {
 			// wenn nein StuetzVektorParameter = (0,0,0)
 
 			workStr = "0,0,0";
