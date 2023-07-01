@@ -8,60 +8,47 @@ public class main {
 		
 		//falls der Input  eine Ebene ist
 		String input = scanner.nextLine();
-		String flagInput = "";
-		if(input.matches(".{1}[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)])")) {
-			Ebene inputObjekt = new Ebene();
-			inputObjekt.ConvertStringToEbene(input);
+		
+		Ebene ebene = null;
+		Gerade gerade1 = null;
+		Gerade gerade2 = null;
+		Punkt punkt = null;
+		//Falls der Input eine Ebene ist
+		if(input.matches(".{1}[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)]|^[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)]")) {
+			 ebene = new Ebene();
+			ebene.ConvertStringToEbene(input);
+			System.out.println(" Eingabe ist eine Ebene!");
 			
 		}
 		//falls der Input eine Gerade ist
 		else if(input.matches(".{1}[(][0-9,-]+[)]|^[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)]")){
-			Gerade inputObjekt = new Gerade();
-			inputObjekt.ConvertStringToGerade(input);
-			
-			
+			if(gerade1 == null) {
+				gerade1 = new Gerade();
+				gerade1.ConvertStringToGerade(input);
+				System.out.println(" Eingabe ist eine Gerade!");
+			}else {
+				gerade2 = new Gerade();
+				gerade2.ConvertStringToGerade(input);
+				System.out.println(" Eingabe ist eine Gerade!");
+			}
 		}
 		//Falls der Input ein Punkt ist
 		else if(input.matches("^[(][0-9,-]+[)]")){
+			
 			Punkt inputObjekt = new Punkt();
 			inputObjekt.ConvertStringToPunkt(input);
+			System.out.println(" Eingabe ist ein Punkt!");
+
 			
 		}else {
 			System.out.println("Ungültige Eingabe Festgestellt!");
-		Object	inputObjekt = null;
-		flagInput = "x";
-
 		}
 		
+	
 		
-		Gerade gerade = new Gerade();
-		gerade.ConvertStringToGerade("(2,1,1)+s(2,0,2)");;
 		
-		Punkt punkt = new Punkt();
-		punkt.ConvertStringToPunkt("(5,2,3)");
-		System.out.println(Rechner.BerechneAbstand(punkt,gerade));
 		
-		Punkt punkt2 = new Punkt();
-		punkt2.ConvertStringToPunkt("(6,10,2)");
-		Ebene ebene = new Ebene();
-		ebene.ConvertStringToEbene("(3,1,2)+s(1,1,6)+r(1,0,2)");
-		
-		System.out.println(Rechner.BerechneAbstand(punkt2, ebene));
-		
-		Gerade gerade1 = new Gerade();
-		Gerade gerade2 = new Gerade();
-		
-		gerade1.ConvertStringToGerade("(2,0,1)+s(-4,1,1)");
-		gerade2.ConvertStringToGerade("(0,5,6)+s(-8,2,2)");
-		
-		System.out.println(Rechner.BerechneAbstand(gerade1, gerade2));
-
-		Gerade gerade3 = new Gerade();
-		Gerade gerade4 = new Gerade();
-		gerade3.ConvertStringToGerade("(0,7,6)+s(1,0,0)");
-		gerade4.ConvertStringToGerade("(2,-2,19)+s(0,4,-3)");
-		System.out.println(Rechner.BerechneAbstand(gerade3, gerade4));
-		
+	
 		scanner.close();
 	
 
