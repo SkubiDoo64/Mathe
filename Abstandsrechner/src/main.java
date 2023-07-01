@@ -12,11 +12,12 @@ public class main {
 		punkt.ConvertStringToPunkt("(5,2,3)");
 		System.out.println(Rechner.BerechneAbstand(punkt,gerade));
 		
-		punkt.ConvertStringToPunkt("(6,10,2)");
+		Punkt punkt2 = new Punkt();
+		punkt2.ConvertStringToPunkt("(6,10,2)");
 		Ebene ebene = new Ebene();
 		ebene.ConvertStringToEbene("(3,1,2)+s(1,1,6)+r(1,0,2)");
 		
-		System.out.println(Rechner.BerechneAbstand(punkt, ebene));
+		System.out.println(Rechner.BerechneAbstand(punkt2, ebene));
 		
 		Gerade gerade1 = new Gerade();
 		Gerade gerade2 = new Gerade();
