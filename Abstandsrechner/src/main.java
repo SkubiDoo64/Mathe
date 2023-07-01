@@ -4,7 +4,21 @@ public class main {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		Abstand(scanner);
+		System.out.println("Bitte entscheiden Sie sich für eine der Folgenden Optionen:");
+		System.out.println("1: Kreuzprodukt Vektor n Dimenionalerraum n>=3");
+		System.out.println("2: Abstandsberechning R³");
+		System.out.println("Für 1. geben Sie bitte eine \"1\" ein:");
+		System.out.println("Für 2. geben Sie bitte eine \"2\" ein:");
+
+		String entscheidung = scanner.nextLine();
+		if (entscheidung.equalsIgnoreCase("1")) {
+
+		} else if (entscheidung.equals("2")) {
+			Abstand(scanner);
+		} else {
+			System.out.println("Bitte geben Sie eine gültige Eingabe ein");
+			System.out.println("und starten Sie dafür das Programm bitte neu.");
+		}
 
 		scanner.close();
 
@@ -12,6 +26,9 @@ public class main {
 
 	private static void Abstand(Scanner scanner) {
 		// falls der Input eine Ebene ist
+		System.out.println("Bitte geben Sie eine Ebene in dem Folgenden Format an: (0,0,0)+s(0,0,0)+r(0,0,0)");
+		System.out.println("Bitte geben Sie eine Gerade in dem Folgenden Format an: (0,0,0)+s(0,0,0)");
+		System.out.println("Bitte geben Sie ein Punkt2 in dem Folgenden Format an: (0,0,0)");
 		System.out.print("Bitte geben Sie ihre erste Eingabe ein:");
 		String input = scanner.nextLine();
 
@@ -53,12 +70,18 @@ public class main {
 		}
 
 		if (punkt != null && gerade1 != null) {
-			System.out.println(Rechner.BerechneAbstand(punkt, gerade1));
+			System.out.print("Der Abstand beträgt ");
+			System.out.print(Rechner.BerechneAbstand(punkt, gerade1));
+			System.out.print(" Längeneinheiten.");
 		} else if (punkt != null && ebene != null) {
-			System.out.println(Rechner.BerechneAbstand(punkt, ebene));
+			System.out.print("Der Abstand beträgt ");
+			System.out.print(Rechner.BerechneAbstand(punkt, ebene));
+			System.out.print(" Längeneinheiten.");
 		} else if (gerade1 != null && gerade2 != null) {
-			System.out.println(Rechner.BerechneAbstand(gerade1, gerade2));
-		}else {
+			System.out.print("Der Abstand beträgt ");
+			System.out.print(Rechner.BerechneAbstand(gerade1, gerade2));
+			System.out.print(" Längeneinheiten.");
+		} else {
 			System.out.println("Es ist nur möglich den Abstand von:");
 			System.out.println("Punkt Gerade");
 			System.out.println("Punkt Ebene");
