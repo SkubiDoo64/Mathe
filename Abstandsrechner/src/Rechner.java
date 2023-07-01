@@ -53,12 +53,49 @@ public class Rechner {
 
 			Ebene geradeGH = new Ebene();
 
-			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++)
+			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++) {
 				geradeGH.StuetsVectorParameter.Werte
 						.add(gerade1.StuetsVectorParameter.Werte.get(i) - gerade2.StuetsVectorParameter.Werte.get(i));
-		
-			
-			abstand = 0;
+			}
+			geradeGH.RichtungsVectorParameter1 = gerade1.RichtungsVectorParameter;
+			geradeGH.RichtungsVectorParameter2 = gerade2.RichtungsVectorParameter;
+
+			double linksdergleichung = 0;
+			double rechtsdergleichung = 0;
+			double x = 0;
+			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++) {
+				rechtsdergleichung = rechtsdergleichung + (-1) * (geradeGH.StuetsVectorParameter.Werte.get(i)
+						* geradeGH.RichtungsVectorParameter1.Werte.get(i));
+
+				linksdergleichung = linksdergleichung + geradeGH.RichtungsVectorParameter1.Werte.get(i)
+						* geradeGH.RichtungsVectorParameter1.Werte.get(i);
+				abstand = 0;
+			}
+			x = rechtsdergleichung / linksdergleichung;
+			rechtsdergleichung = 0;
+			linksdergleichung = 0;
+			double y = 0;
+			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++) {
+				rechtsdergleichung = rechtsdergleichung + (-1) * (geradeGH.StuetsVectorParameter.Werte.get(i)
+						* geradeGH.RichtungsVectorParameter2.Werte.get(i));
+
+				linksdergleichung = linksdergleichung + (-1) * geradeGH.RichtungsVectorParameter2.Werte.get(i)
+						* geradeGH.RichtungsVectorParameter2.Werte.get(i);
+				abstand = 0;
+			}
+			y = rechtsdergleichung / linksdergleichung;
+
+			Vektor vektor = new Vektor();
+
+			for (int i = 0; i < geradeGH.StuetsVectorParameter.Werte.size(); i++) {
+				double ergebnis = geradeGH.StuetsVectorParameter.Werte.get(i)
+						+ x * geradeGH.RichtungsVectorParameter1.Werte.get(i);
+				ergebnis = ergebnis - y * geradeGH.RichtungsVectorParameter2.Werte.get(i);
+
+				vektor.Werte.add(ergebnis);
+			}
+
+			abstand = BetragBerechnenVektor(vektor);
 		}
 
 		return abstand;

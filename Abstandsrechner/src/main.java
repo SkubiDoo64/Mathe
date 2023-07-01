@@ -25,13 +25,13 @@ public class main {
 		gerade1.ConvertStringToGerade("(2,0,1)+s(-4,1,1)");
 		gerade2.ConvertStringToGerade("(0,5,6)+s(-8,2,2)");
 		
-		System.out.print(Rechner.BerechneAbstand(gerade1, gerade2));
+		System.out.println(Rechner.BerechneAbstand(gerade1, gerade2));
 
 		Gerade gerade3 = new Gerade();
 		Gerade gerade4 = new Gerade();
 		gerade3.ConvertStringToGerade("(0,7,6)+s(1,0,0)");
 		gerade4.ConvertStringToGerade("(2,-2,19)+s(0,4,-3)");
-		System.out.print(Rechner.BerechneAbstand(gerade3, gerade4));
+		System.out.println(Rechner.BerechneAbstand(gerade3, gerade4));
 		
 		scanner.close();
 	
