@@ -1,10 +1,39 @@
 import java.util.Scanner;
 
 public class main {
+	
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		
+		//falls der Input  eine Ebene ist
+		String input = scanner.nextLine();
+		String flagInput = "";
+		if(input.matches(".{1}[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)])")) {
+			Ebene inputObjekt = new Ebene();
+			inputObjekt.ConvertStringToEbene(input);
+			
+		}
+		//falls der Input eine Gerade ist
+		else if(input.matches(".{1}[(][0-9,-]+[)]|^[(][0-9,-]+[)][+-].{1}[(][0-9,-]+[)]")){
+			Gerade inputObjekt = new Gerade();
+			inputObjekt.ConvertStringToGerade(input);
+			
+			
+		}
+		//Falls der Input ein Punkt ist
+		else if(input.matches("^[(][0-9,-]+[)]")){
+			Punkt inputObjekt = new Punkt();
+			inputObjekt.ConvertStringToPunkt(input);
+			
+		}else {
+			System.out.println("Ungültige Eingabe Festgestellt!");
+		Object	inputObjekt = null;
+		flagInput = "x";
 
+		}
+		
+		
 		Gerade gerade = new Gerade();
 		gerade.ConvertStringToGerade("(2,1,1)+s(2,0,2)");;
 		
