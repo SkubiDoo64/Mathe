@@ -11,9 +11,9 @@ public class Gerade {
 		RichtungsVectorParameter = new Vektor();
 	}
 
-	// ein String Beispiel "(1,1,1)+s(3,2,5)"
+	// ein String Beispiel ""
 	// Weitere Test Inputs "p(0,8,15)
-	public void ConvertStringToPunkt(String str) {
+	public void ConvertStringToGerade(String str) {
 		String workStr = "";
 		// Prüfen pb ein Ortsvektor Vorhanden ist
 		if (str.matches("^[(][0-9,]+[)].+")) {
@@ -73,4 +73,11 @@ public class Gerade {
 		}
 
 	}
+	
+	
+	
+	
+	
+	
+	
 }

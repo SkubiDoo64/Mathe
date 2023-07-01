@@ -62,6 +62,36 @@ double abstand = 0;
 
 		return 0;
 	}
+	public static double BerechneAbstand(Punkt punkt, Gerade gerade) {
+//Zunächst muss man das Lotfällen dafür benötigen wir eine Hilfsebene
+	Ebene hilfsebene = new Ebene();
+	// Die Koeffizienten Der ebenengleichung entnehmen wir dem Richtungsvektoren der gerade
+	double x = punkt.StuetsVectorParameter.Werte.get(0);
+	double y = punkt.StuetsVectorParameter.Werte.get(1);
+	double z = punkt.StuetsVectorParameter.Werte.get(2);
+	double r = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);
+	
+	double lamda = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.RichtungsVectorParameter.Werte.get(0)
+				+ gerade.RichtungsVectorParameter.Werte.get(1) * gerade.RichtungsVectorParameter.Werte.get(1)
+				+ gerade.RichtungsVectorParameter.Werte.get(2) * gerade.RichtungsVectorParameter.Werte.get(2);  
+	double schnittpunktWerte = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.StuetsVectorParameter.Werte.get(0) + gerade.RichtungsVectorParameter.Werte.get(1) * gerade.StuetsVectorParameter.Werte.get(1)  + gerade.RichtungsVectorParameter.Werte.get(2) * gerade.StuetsVectorParameter.Werte.get(2)  ;
+	lamda = (r - schnittpunktWerte) / lamda;
+	
+	Punkt lotfußpunkt = new Punkt();
+	for (int i = 0; i<3;i++) {
+	double tempWert = gerade.StuetsVectorParameter.Werte.get(i) + gerade.RichtungsVectorParameter.Werte.get(i) * lamda;
+		lotfußpunkt.StuetsVectorParameter.Werte.add(tempWert );
+		
+	}
+	Vektor verbindungsVektor = new Vektor();
+	for (int i=0;i<3;i++) {
+		verbindungsVektor.Werte.add(punkt.StuetsVectorParameter.Werte.get(i) - lotfußpunkt.StuetsVectorParameter.Werte.get(i));
+	}
+	
+	
+	return BetragBerechnenVektor(verbindungsVektor);
+	} 
+
 
 	private static boolean ProofVektorVielfachVonEinander(Vektor vektor1, Vektor vektor2) {
 		boolean vielfaches = false;
