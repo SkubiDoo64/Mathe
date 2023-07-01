@@ -20,19 +20,20 @@ public class Rechner {
 		return BetragBerechnenVektor(ps);
 	}
 
-	public static double BerechneAbstand(Gerade gerade, Gerade gerade2) {
+	public static double BerechneAbstand(Gerade gerade1, Gerade gerade2) {
 
-		boolean parallel = ProofVektorVielfachVonEinander(gerade.RichtungsVectorParameter,
+		boolean parallel = ProofVektorVielfachVonEinander(gerade1.RichtungsVectorParameter,
 				gerade2.RichtungsVectorParameter);
-double abstand = 0;
+		double abstand = 0;
 		if (parallel) {
-			double skalarprodukt = VectorMultiplikation(gerade.RichtungsVectorParameter, gerade.StuetsVectorParameter);
+			double skalarprodukt = VectorMultiplikation(gerade1.RichtungsVectorParameter,
+					gerade1.StuetsVectorParameter);
 			for (double wert : gerade2.StuetsVectorParameter.Werte) {
 				skalarprodukt = skalarprodukt - wert;
 			}
 			double x = 0;
 			for (int i = 0; i < gerade2.RichtungsVectorParameter.Werte.size(); i++) {
-				x = x + gerade.RichtungsVectorParameter.Werte.get(i) * gerade2.RichtungsVectorParameter.Werte.get(i);
+				x = x + gerade1.RichtungsVectorParameter.Werte.get(i) * gerade2.RichtungsVectorParameter.Werte.get(i);
 			}
 			double gleichungsloesung = skalarprodukt / x;
 
@@ -45,53 +46,65 @@ double abstand = 0;
 			}
 
 			Vektor verbindungsVektor = VectorSubtraction(paralelerPunkt.StuetsVectorParameter,
-					gerade.StuetsVectorParameter);
+					gerade1.StuetsVectorParameter);
 
 			abstand = BetragBerechnenVektor(verbindungsVektor);
 		} else {
-			
-			
-			
+
+			Ebene geradeGH = new Ebene();
+
+			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++)
+				geradeGH.StuetsVectorParameter.Werte
+						.add(gerade1.StuetsVectorParameter.Werte.get(i) - gerade2.StuetsVectorParameter.Werte.get(i));
+		
 			
 			abstand = 0;
 		}
+
 		return abstand;
+
 	}
 
 	public static int BerechneAbstand() {
 
 		return 0;
 	}
+
 	public static double BerechneAbstand(Punkt punkt, Gerade gerade) {
 //Zunächst muss man das Lotfällen dafür benötigen wir eine Hilfsebene
-	Ebene hilfsebene = new Ebene();
-	// Die Koeffizienten Der ebenengleichung entnehmen wir dem Richtungsvektoren der gerade
-	double x = punkt.StuetsVectorParameter.Werte.get(0);
-	double y = punkt.StuetsVectorParameter.Werte.get(1);
-	double z = punkt.StuetsVectorParameter.Werte.get(2);
-	double r = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);
-	
-	double lamda = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.RichtungsVectorParameter.Werte.get(0)
-				+ gerade.RichtungsVectorParameter.Werte.get(1) * gerade.RichtungsVectorParameter.Werte.get(1)
-				+ gerade.RichtungsVectorParameter.Werte.get(2) * gerade.RichtungsVectorParameter.Werte.get(2);  
-	double schnittpunktWerte = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.StuetsVectorParameter.Werte.get(0) + gerade.RichtungsVectorParameter.Werte.get(1) * gerade.StuetsVectorParameter.Werte.get(1)  + gerade.RichtungsVectorParameter.Werte.get(2) * gerade.StuetsVectorParameter.Werte.get(2)  ;
-	lamda = (r - schnittpunktWerte) / lamda;
-	
-	Punkt lotfußpunkt = new Punkt();
-	for (int i = 0; i<3;i++) {
-	double tempWert = gerade.StuetsVectorParameter.Werte.get(i) + gerade.RichtungsVectorParameter.Werte.get(i) * lamda;
-		lotfußpunkt.StuetsVectorParameter.Werte.add(tempWert );
-		
-	}
-	Vektor verbindungsVektor = new Vektor();
-	for (int i=0;i<3;i++) {
-		verbindungsVektor.Werte.add(punkt.StuetsVectorParameter.Werte.get(i) - lotfußpunkt.StuetsVectorParameter.Werte.get(i));
-	}
-	
-	
-	return BetragBerechnenVektor(verbindungsVektor);
-	} 
+		Ebene hilfsebene = new Ebene();
+		// Die Koeffizienten Der ebenengleichung entnehmen wir dem Richtungsvektoren der
+		// gerade
+		double x = punkt.StuetsVectorParameter.Werte.get(0);
+		double y = punkt.StuetsVectorParameter.Werte.get(1);
+		double z = punkt.StuetsVectorParameter.Werte.get(2);
+		double r = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1)
+				+ z * gerade.RichtungsVectorParameter.Werte.get(2);
 
+		double lamda = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.RichtungsVectorParameter.Werte.get(0)
+				+ gerade.RichtungsVectorParameter.Werte.get(1) * gerade.RichtungsVectorParameter.Werte.get(1)
+				+ gerade.RichtungsVectorParameter.Werte.get(2) * gerade.RichtungsVectorParameter.Werte.get(2);
+		double schnittpunktWerte = gerade.RichtungsVectorParameter.Werte.get(0)
+				* gerade.StuetsVectorParameter.Werte.get(0)
+				+ gerade.RichtungsVectorParameter.Werte.get(1) * gerade.StuetsVectorParameter.Werte.get(1)
+				+ gerade.RichtungsVectorParameter.Werte.get(2) * gerade.StuetsVectorParameter.Werte.get(2);
+		lamda = (r - schnittpunktWerte) / lamda;
+
+		Punkt lotfußpunkt = new Punkt();
+		for (int i = 0; i < 3; i++) {
+			double tempWert = gerade.StuetsVectorParameter.Werte.get(i)
+					+ gerade.RichtungsVectorParameter.Werte.get(i) * lamda;
+			lotfußpunkt.StuetsVectorParameter.Werte.add(tempWert);
+
+		}
+		Vektor verbindungsVektor = new Vektor();
+		for (int i = 0; i < 3; i++) {
+			verbindungsVektor.Werte
+					.add(punkt.StuetsVectorParameter.Werte.get(i) - lotfußpunkt.StuetsVectorParameter.Werte.get(i));
+		}
+
+		return BetragBerechnenVektor(verbindungsVektor);
+	}
 
 	private static boolean ProofVektorVielfachVonEinander(Vektor vektor1, Vektor vektor2) {
 		boolean vielfaches = false;
