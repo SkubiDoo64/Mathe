@@ -42,23 +42,30 @@ public class Rechner {
 //Zunächst muss man das Lotfällen dafür benötigen wir eine Hilfsebene
 	Ebene hilfsebene = new Ebene();
 	// Die Koeffizienten Der ebenengleichung entnehmen wir dem Richtungsvektoren der gerade
-	int x = punkt.StuetsVectorParameter.Werte.get(0);
-	int y = punkt.StuetsVectorParameter.Werte.get(1);
-	int z = punkt.StuetsVectorParameter.Werte.get(2);
-	int r = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);
+	double x = punkt.StuetsVectorParameter.Werte.get(0);
+	double y = punkt.StuetsVectorParameter.Werte.get(1);
+	double z = punkt.StuetsVectorParameter.Werte.get(2);
+	double r = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);
 	
-	double lamda = x * gerade.RichtungsVectorParameter.Werte.get(0) + y * gerade.RichtungsVectorParameter.Werte.get(1) + z * gerade.RichtungsVectorParameter.Werte.get(2);  
-	double schnittpunktWerte = x * gerade.StuetsVectorParameter.Werte.get(0) + y * gerade.StuetsVectorParameter.Werte.get(1) + z * gerade.StuetsVectorParameter.Werte.get(2) ;
-	lamda = lamda / (r - schnittpunktWerte);
+	double lamda = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.RichtungsVectorParameter.Werte.get(0)
+				+ gerade.RichtungsVectorParameter.Werte.get(1) * gerade.RichtungsVectorParameter.Werte.get(1)
+				+ gerade.RichtungsVectorParameter.Werte.get(2) * gerade.RichtungsVectorParameter.Werte.get(2);  
+	double schnittpunktWerte = gerade.RichtungsVectorParameter.Werte.get(0) * gerade.StuetsVectorParameter.Werte.get(0) + gerade.RichtungsVectorParameter.Werte.get(1) * gerade.StuetsVectorParameter.Werte.get(1)  + gerade.RichtungsVectorParameter.Werte.get(2) * gerade.StuetsVectorParameter.Werte.get(2)  ;
+	lamda = (r - schnittpunktWerte) / lamda;
 	
 	Punkt lotfußpunkt = new Punkt();
 	for (int i = 0; i<3;i++) {
-		lotfußpunkt.StuetsVectorParameter.Werte.set(i, (gerade.StuetsVectorParameter.Werte.get(i) + gerade.RichtungsVectorParameter.Werte.get(i) * lamda));
+	double tempWert = gerade.StuetsVectorParameter.Werte.get(i) + gerade.RichtungsVectorParameter.Werte.get(i) * lamda;
+		lotfußpunkt.StuetsVectorParameter.Werte.add(tempWert );
 		
 	}
-	double result;
+	Vektor verbindungsVektor = new Vektor();
+	for (int i=0;i<3;i++) {
+		verbindungsVektor.Werte.add(punkt.StuetsVectorParameter.Werte.get(i) - lotfußpunkt.StuetsVectorParameter.Werte.get(i));
+	}
 	
-	return result;
+	
+	return BetragBerechnenVektor(verbindungsVektor);
 	} 
 
 
