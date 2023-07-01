@@ -11,6 +11,7 @@ public class main {
 		System.out.println("Für 2. geben Sie bitte eine \"2\" ein:");
 
 		String entscheidung = scanner.nextLine();
+		
 		if (entscheidung.equalsIgnoreCase("1")) {
 
 		} else if (entscheidung.equals("2")) {
@@ -31,7 +32,6 @@ public class main {
 		System.out.println("Bitte geben Sie ein Punkt2 in dem Folgenden Format an: (0,0,0)");
 		System.out.print("Bitte geben Sie ihre erste Eingabe ein:");
 		String input = scanner.nextLine();
-
 		Ebene ebene = null;
 		Gerade gerade1 = null;
 		Gerade gerade2 = null;

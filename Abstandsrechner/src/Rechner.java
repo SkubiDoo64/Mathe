@@ -173,10 +173,10 @@ public class Rechner {
 		/// GausAlgorithmus;
 
 		List<List<Double>> zeilen = new ArrayList<>();
+		List<Double> berechnungszeile = new ArrayList<Double>();
 
 		for (int i = 0; i < gerade.StuetsVectorParameter.Werte.size(); i++) {
 			List<Double> neueZeile = new ArrayList<Double>();
-
 			/// vor dem gleichzeichen
 			neueZeile.add(ebene.RichtungsVectorParameter1.Werte.get(i));
 			neueZeile.add(ebene.RichtungsVectorParameter2.Werte.get(i));
@@ -194,33 +194,29 @@ public class Rechner {
 		// wert mit der die dritte zeile mulipliziert werden muss
 		double wert2 = zeilen.get(1).get(0);
 
+		berechnungszeile = MapListeToListe(zeilen.get(2));
+
 		// multiplizieren zweite und dritte mit dem wert und subtrahiere dann die dritte
 		// zeile von der zweiten.
 		for (int i = 0; i < zeilen.get(0).size(); i++) {
 			zeilen.get(1).set(i, zeilen.get(1).get(i) * wert1);
-			zeilen.get(2).set(i, zeilen.get(2).get(i) * wert2);
+			berechnungszeile.set(i, berechnungszeile.get(i) * wert2);
 			// dritte von der zweiten abziehen;
-			zeilen.get(1).set(i, zeilen.get(1).get(i) - zeilen.get(2).get(i));
-
-			// zurücksetzen der 3. zeile
-			zeilen.get(2).set(i, zeilen.get(2).get(i) / wert2);
+			zeilen.get(1).set(i, zeilen.get(1).get(i) - berechnungszeile.get(i));
 		}
 
 		// wert 3. zeile multiplizieren
 		wert1 = zeilen.get(0).get(0);
 		// wert 1. zeile multiplizieren
 		wert2 = zeilen.get(2).get(0);
-
+		berechnungszeile = MapListeToListe(zeilen.get(0));
 		// multiplizieren 1.und 3. mit dem wert und subtrahiere dann die 1.
 		// zeile von der zweiten.
 		for (int i = 0; i < zeilen.get(0).size(); i++) {
 			zeilen.get(2).set(i, zeilen.get(2).get(i) * wert1);
-			zeilen.get(0).set(i, zeilen.get(0).get(i) * wert2);
+			berechnungszeile.set(i, berechnungszeile.get(i) * wert2);
 			// dritte von der zweiten abziehen;
-			zeilen.get(2).set(i, zeilen.get(2).get(i) - zeilen.get(0).get(i));
-
-			// zurücksetzen der 3. zeile
-			zeilen.get(0).set(i, zeilen.get(0).get(i) / wert2);
+			zeilen.get(2).set(i, zeilen.get(2).get(i) - berechnungszeile.get(i));
 		}
 
 		// wert 2. zeile multiplizieren
@@ -228,16 +224,15 @@ public class Rechner {
 		// wert 3. zeile multiplizieren
 		wert2 = zeilen.get(1).get(1);
 
+		berechnungszeile = MapListeToListe(zeilen.get(1));
 		// multiplizieren 1.und 3. mit dem wert und subtrahiere dann die 2.
 		// zeile von der zweiten.
 		for (int i = 0; i < zeilen.get(0).size(); i++) {
-			zeilen.get(1).set(i, zeilen.get(1).get(i) * wert1);
+			berechnungszeile.set(i, berechnungszeile.get(i) * wert1);
 			zeilen.get(2).set(i, zeilen.get(2).get(i) * wert2);
 			// 2. von der 3. abziehen;
-			zeilen.get(2).set(i, zeilen.get(2).get(i) - zeilen.get(1).get(i));
+			zeilen.get(2).set(i, zeilen.get(2).get(i) - berechnungszeile.get(i));
 
-			// zurücksetzen der 3. zeile
-			zeilen.get(1).set(i, zeilen.get(1).get(i) / wert2);
 		}
 
 		// Punkte berechnen:
@@ -253,10 +248,15 @@ public class Rechner {
 					gerade.StuetsVectorParameter.Werte.get(i) + punkt3 * gerade.RichtungsVectorParameter.Werte.get(i));
 		}
 
-		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt3);
-		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt1);
-		// schnittPunkt.StuetsVectorParameter.Werte.add(punkt2);
 		return schnittPunkt;
+	}
+
+	private static List<Double> MapListeToListe(List<Double> zeilen) {
+		List<Double> berechnungszeile = new ArrayList<Double>();
+		for (int i = 0; i < zeilen.size(); i++) {
+			berechnungszeile.add(zeilen.get(i));
+		}
+		return berechnungszeile;
 	}
 
 	/// Hier wird der Betrag eines ergebnisses einer Vektor multiplication berechnet
