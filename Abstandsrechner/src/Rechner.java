@@ -304,8 +304,69 @@ public class Rechner {
 	}
 
 	public static Vektor BerechneKreuzproduktLaplacescher(List<Vektor> vektoren, int dimensionen) {
+		/// Erstellen der Muttermatrix
+		Matrix hauptMatrix = new Matrix();
+		for (int i = 0; i < dimensionen; i++) {
+			hauptMatrix.Matrix.add(new ArrayList<>());
+			for (int j = 0; j < vektoren.size(); j++) {
+				hauptMatrix.Matrix.get(i).add(vektoren.get(j).Werte.get(i));
+			}
+		}
 
+		List<Matrix> matrixen = new ArrayList<Matrix>();
+		// 4x4 matrix erstellung
+		for (int i = 0; i < dimensionen; i++) {
+			Matrix neueMatrix = new Matrix();
+			for (int a = 0; a < dimensionen; a++) {
+				if (i != a) {
+					neueMatrix.Matrix.add(hauptMatrix.Matrix.get(a));
+				} else {
+					if (a % 2 == 0) {
+						neueMatrix.Multiplikator = hauptMatrix.Matrix.get(a).get(0);
+					} else {
+						neueMatrix.Multiplikator = -1 * hauptMatrix.Matrix.get(a).get(0);
+					}
+				}
+			}
+			neueMatrix.dimensionen = neueMatrix.Matrix.size();
+
+			matrixen.add(neueMatrix);
+		}
+		
+		for (int i = 0; i < matrixen.size(); i++) {
+			List<Matrix> test = MachKleiner(matrixen.get(0));
+			
+		}
 		return new Vektor();
+	}
+
+	private static List<Matrix> MachKleiner(Matrix mutterMatrix) {
+		List<Matrix> neueMatrixen = new ArrayList<Matrix>();
+
+		for (int i = 0; i < mutterMatrix.dimensionen; i++) {
+			Matrix neueMatrix = new Matrix();
+			for (int a = 1; a < mutterMatrix.dimensionen; a++) {
+				if (i != a) {
+					neueMatrix.Matrix.add(mutterMatrix.Matrix.get(a));
+				} else {
+					if (a % 2 == 0) {
+						neueMatrix.Multiplikator = mutterMatrix.Matrix.get(a).get(0);
+					} else {
+						neueMatrix.Multiplikator = -1 * mutterMatrix.Matrix.get(a).get(0);
+					}
+				}
+			}
+			neueMatrix.dimensionen = neueMatrix.Matrix.size();
+
+			neueMatrixen.add(neueMatrix);
+		}
+		if(neueMatrixen.get(0).Matrix.size() !=2) {
+			for (Matrix matrix : neueMatrixen) {
+				
+				MachKleiner(matrix);
+			}
+		}
+		return neueMatrixen;
 	}
 
 	public static Vektor BerechneKreuzproduktSarrus(List<Vektor> vektoren, int dimensionen) {
