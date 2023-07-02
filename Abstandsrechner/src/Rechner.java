@@ -425,13 +425,11 @@ public class Rechner {
 			double determinantenegativ = 0;
 			for (int a = 0; a < 3; a++) {
 				wert = wert * vektorMatrix.get(0 + i).get(a);
-
 				if (a + 1 < 3) {
 					wert = wert * vektorMatrix.get(1 + i).get(a + 1);
 				} else {
 					wert = wert * vektorMatrix.get(1 + i).get(a + 1 - (3));
 				}
-
 				if (a + 2 < 3) {
 					wert = wert * vektorMatrix.get(2 + i).get(a + 2);
 				} else {
