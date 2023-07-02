@@ -10,10 +10,9 @@ public class main {
 		System.out.println("1: Kreuzprodukt Vektor n Dimenionalerraum n>=3");
 		System.out.println("2: Abstandsberechning R³");
 		System.out.println("Für 1. geben Sie bitte eine \"1\" ein:");
-		System.out.println("Für 2. geben Sie bitte eine \"2\" ein:");
+		System.out.print("Für 2. geben Sie bitte eine \"2\" ein:");
 
-		// String entscheidung = scanner.nextLine();
-		String entscheidung = "1";
+		String entscheidung = scanner.nextLine();
 		if (entscheidung.equalsIgnoreCase("1")) {
 			Kreuzprodukt(scanner);
 		} else if (entscheidung.equals("2")) {
@@ -30,26 +29,14 @@ public class main {
 	private static void Kreuzprodukt(Scanner scanner) {
 		System.out.println("In welchem Vektorraum möchten Sie das Kreutzprodukt berechnen Lassen?");
 		System.out.print("N>3 :");
-		// int vektorraum = Integer.parseInt(scanner.nextLine());
-		int vektorraum = 5;
+		int vektorraum = Integer.parseInt(scanner.nextLine());
 		System.out.println("Bitte geben Sie die Vektoren in der Folgenden Form an: (1,2,3,...,n)");
 		List<Vektor> vektoren = new ArrayList<Vektor>();
-		for (int i = 0; i < 2 - 1; i++) {
+		for (int i = 0; i < vektorraum - 1; i++) {
+			System.out.print(String.format("Punkt Nr.%s :",(i+1)));
 			Punkt punkt = new Punkt();
-			punkt.ConvertStringToPunkt("1,2,0,3,1");
+			punkt.ConvertStringToPunkt(scanner.nextLine());
 			vektoren.add(punkt.StuetsVectorParameter);
-
-			Punkt punkt2 = new Punkt();
-			punkt2.ConvertStringToPunkt("3,2,1,2,5");
-			vektoren.add(punkt2.StuetsVectorParameter);
-
-			Punkt punkt3 = new Punkt();
-			punkt3.ConvertStringToPunkt("2,1,2,5,6");
-			vektoren.add(punkt3.StuetsVectorParameter);
-
-			Punkt punkt4 = new Punkt();
-			punkt4.ConvertStringToPunkt("5,1,8,3,7");
-			vektoren.add(punkt4.StuetsVectorParameter);
 		}
 
 		Vektor kreuzVektor = new Vektor();
