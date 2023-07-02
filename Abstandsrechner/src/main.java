@@ -36,11 +36,11 @@ public class main {
 		List<Vektor> vektoren = new ArrayList<Vektor>();
 		for (int i = 0; i < 2 - 1; i++) {
 			Punkt punkt = new Punkt();
-			punkt.ConvertStringToPunkt("1,2,0,3,5");
+			punkt.ConvertStringToPunkt("1,2,0,3,1");
 			vektoren.add(punkt.StuetsVectorParameter);
 
 			Punkt punkt2 = new Punkt();
-			punkt2.ConvertStringToPunkt("3,2,1,2,13");
+			punkt2.ConvertStringToPunkt("3,2,1,2,5");
 			vektoren.add(punkt2.StuetsVectorParameter);
 
 			Punkt punkt3 = new Punkt();
@@ -52,16 +52,16 @@ public class main {
 			vektoren.add(punkt4.StuetsVectorParameter);
 		}
 
+		Vektor kreuzVektor = new Vektor();
 		if (vektorraum == 4) {
-
 			System.out.println("Bei einem deminsionalen Vektor werden die Regeln von Sarrus");
 			System.out.println("Angewant um die Determinanten zu berechnen:");
-			Vektor kreuzVektor = Rechner.BerechneKreuzproduktSarrus(vektoren, vektorraum);
+			kreuzVektor = Rechner.BerechneKreuzproduktSarrus(vektoren, vektorraum);
 			for (double vektorParameter : kreuzVektor.Werte) {
 				System.out.println(vektorParameter);
 			}
 		} else {
-			Vektor kreuzVektor = Rechner.BerechneKreuzproduktLaplacescher(vektoren, vektorraum);
+			kreuzVektor = Rechner.BerechneKreuzproduktLaplacescher(vektoren, vektorraum);
 			for (double vektorParameter : kreuzVektor.Werte) {
 				System.out.println(vektorParameter);
 			}

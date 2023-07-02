@@ -332,12 +332,16 @@ public class Rechner {
 
 			matrixen.add(neueMatrix);
 		}
-		
+		Vektor vektor = new Vektor();
 		for (int i = 0; i < matrixen.size(); i++) {
-			List<Matrix> test = MachKleiner(matrixen.get(0));
-			
+			List<Matrix> determinante = MachKleiner(matrixen.get(i));
+			if(i%2 == 0) {
+				vektor.Werte.add(determinante.get(0).determinante);				
+			}else {
+				vektor.Werte.add(-1*determinante.get(0).determinante);	
+			}
 		}
-		return new Vektor();
+		return vektor;
 	}
 
 	private static List<Matrix> MachKleiner(Matrix mutterMatrix) {
@@ -345,10 +349,17 @@ public class Rechner {
 
 		for (int i = 0; i < mutterMatrix.dimensionen; i++) {
 			Matrix neueMatrix = new Matrix();
-			for (int a = 1; a < mutterMatrix.dimensionen; a++) {
+			for (int a = 0; a < mutterMatrix.dimensionen; a++) {
+				List<Double> neueZeile = new ArrayList<Double>();
+
 				if (i != a) {
-					neueMatrix.Matrix.add(mutterMatrix.Matrix.get(a));
+					for (int j = 1; j < mutterMatrix.dimensionen; j++) {
+						neueZeile.add(mutterMatrix.Matrix.get(a).get(j));
+					}
+					neueMatrix.Matrix.add(neueZeile);
+					/// neueMatrix.Matrix.add(mutterMatrix.Matrix.get(a));
 				} else {
+
 					if (a % 2 == 0) {
 						neueMatrix.Multiplikator = mutterMatrix.Matrix.get(a).get(0);
 					} else {
@@ -360,11 +371,29 @@ public class Rechner {
 
 			neueMatrixen.add(neueMatrix);
 		}
-		if(neueMatrixen.get(0).Matrix.size() !=2) {
+		if (neueMatrixen.get(0).Matrix.size() == 2) {
+			double determinantenProdukt = 0;
 			for (Matrix matrix : neueMatrixen) {
-				
-				MachKleiner(matrix);
+				double determinante = matrix.Matrix.get(0).get(0) * matrix.Matrix.get(1).get(1);
+				determinante = determinante - matrix.Matrix.get(1).get(0) * matrix.Matrix.get(0).get(1);
+				determinantenProdukt = determinantenProdukt + matrix.Multiplikator * determinante;
 			}
+			neueMatrixen.clear();
+			Matrix matrix = new Matrix();
+			matrix.determinante = determinantenProdukt;
+			neueMatrixen.add(matrix);
+		} else {
+			double determinantenProdukt = 0;
+			for (Matrix matrix : neueMatrixen) {
+				List<Matrix> matrixen = MachKleiner(matrix);
+				if (matrixen.size() == 1) {
+					determinantenProdukt = determinantenProdukt + (matrix.Multiplikator * matrixen.get(0).determinante);
+				}
+			}
+			neueMatrixen.clear();
+			Matrix matrix = new Matrix();
+			matrix.determinante = determinantenProdukt;
+			neueMatrixen.add(matrix);
 		}
 		return neueMatrixen;
 	}
