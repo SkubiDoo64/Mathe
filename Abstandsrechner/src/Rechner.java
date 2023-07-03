@@ -53,6 +53,10 @@ public class Rechner {
 
 			Ebene geradeGH = new Ebene();
 
+			if (PruefeSchnittpunkt(gerade1, gerade2)) {
+				return 0;
+			}
+
 			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++) {
 				geradeGH.StuetsVectorParameter.Werte
 						.add(gerade1.StuetsVectorParameter.Werte.get(i) - gerade2.StuetsVectorParameter.Werte.get(i));
@@ -94,7 +98,6 @@ public class Rechner {
 
 				vektor.Werte.add(ergebnis);
 			}
-
 			abstand = BetragBerechnenVektor(vektor);
 		}
 
@@ -145,6 +148,15 @@ public class Rechner {
 
 	private static boolean ProofVektorVielfachVonEinander(Vektor vektor1, Vektor vektor2) {
 		boolean vielfaches = false;
+		boolean ersterVekotor = true;
+
+		double testWert1 = vektor1.Werte.get(0);
+		double testWert2 = vektor1.Werte.get(0);
+		if (testWert1 != 0 && testWert2 != 0) {
+			if (testWert1 % testWert2 != 0) {
+				ersterVekotor = false;
+			}
+		}
 
 		for (int i = 0; i < vektor1.Werte.size(); i++) {
 			double wert1 = vektor1.Werte.get(i);
@@ -152,9 +164,9 @@ public class Rechner {
 			if (wert1 == 0 && wert2 == 0) {
 				vielfaches = true;
 			} else if (wert1 != 0 && wert2 != 0) {
-				if (wert1 % wert2 == 0) {
+				if (wert1 % wert2 == 0 && ersterVekotor) {
 					vielfaches = true;
-				} else if (wert2 % wert1 == 0) {
+				} else if (wert2 % wert1 == 0 && !ersterVekotor) {
 					vielfaches = true;
 				} else {
 					return false;
@@ -335,10 +347,10 @@ public class Rechner {
 		Vektor vektor = new Vektor();
 		for (int i = 0; i < matrixen.size(); i++) {
 			List<Matrix> determinante = MachKleiner(matrixen.get(i));
-			if(i%2 == 0) {
-				vektor.Werte.add(determinante.get(0).determinante);				
-			}else {
-				vektor.Werte.add(-1*determinante.get(0).determinante);	
+			if (i % 2 == 0) {
+				vektor.Werte.add(determinante.get(0).determinante);
+			} else {
+				vektor.Werte.add(-1 * determinante.get(0).determinante);
 			}
 		}
 		return vektor;
@@ -491,5 +503,41 @@ public class Rechner {
 			normalenVector.Werte.add(zwischensumme - zwischensumme2);
 		}
 		return normalenVector;
+	}
+
+	private static boolean PruefeSchnittpunkt(Gerade gerade1, Gerade gerade2) {
+		List<List<Double>> gleichungen = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++) {
+			gleichungen.add(new ArrayList<Double>());
+			gleichungen.get(i).add(gerade1.RichtungsVectorParameter.Werte.get(i));
+			gleichungen.get(i).add(gerade2.RichtungsVectorParameter.Werte.get(i));
+			double einzelwert = gerade2.StuetsVectorParameter.Werte.get(i) - gerade1.StuetsVectorParameter.Werte.get(i);
+			gleichungen.get(i).add(einzelwert);
+		}
+		
+		List<Double> zwischengleichung = new ArrayList<>();		
+		for (int i = 0; i < 3; i++) {
+			zwischengleichung.add(gleichungen.get(1).get(i));
+		}
+
+		double wert1 = gleichungen.get(0).get(1);
+		double wert2 = gleichungen.get(1).get(1);
+		
+		for (int i = 0; i < 3; i++) {
+			gleichungen.get(0).set(i,gleichungen.get(0).get(i) * wert2);
+			zwischengleichung.set(i,zwischengleichung.get(i) * wert1);
+			
+			gleichungen.get(0).set(i, gleichungen.get(0).get(i)- zwischengleichung.get(i));
+		}
+		double r = gleichungen.get(0).get(0) / gleichungen.get(0).get(2);
+		double s = gleichungen.get(1).get(0) * r - gleichungen.get(1).get(2);
+		s = s / gleichungen.get(1).get(1);
+		
+		if(r == s) {
+			return true;
+		}
+		
+		return false;
 	}
 }
