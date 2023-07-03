@@ -53,10 +53,6 @@ public class Rechner {
 
 			Ebene geradeGH = new Ebene();
 
-			if (PruefeSchnittpunkt(gerade1, gerade2)) {
-				return 0;
-			}
-
 			for (int i = 0; i < gerade1.RichtungsVectorParameter.Werte.size(); i++) {
 				geradeGH.StuetsVectorParameter.Werte
 						.add(gerade1.StuetsVectorParameter.Werte.get(i) - gerade2.StuetsVectorParameter.Werte.get(i));
