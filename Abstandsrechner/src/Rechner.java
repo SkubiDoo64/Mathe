@@ -22,6 +22,9 @@ public class Rechner {
 
 	public static double BerechneAbstand(Gerade gerade1, Gerade gerade2) {
 
+		if (PruefeSchnittpunkt(gerade1, gerade2)) {
+			return 0;
+		}
 		boolean parallel = ProofVektorVielfachVonEinander(gerade1.RichtungsVectorParameter,
 				gerade2.RichtungsVectorParameter);
 		double abstand = 0;
@@ -99,11 +102,6 @@ public class Rechner {
 
 		return abstand;
 
-	}
-
-	public static int BerechneAbstand() {
-
-		return 0;
 	}
 
 	public static double BerechneAbstand(Punkt punkt, Gerade gerade) {
@@ -267,18 +265,6 @@ public class Rechner {
 		return berechnungszeile;
 	}
 
-	/// Hier wird der Betrag eines ergebnisses einer Vektor multiplication berechnet
-	private static double BetragBerechnen(Vektor vektor) {
-		double betrag = 0;
-
-		for (double zahl : vektor.Werte) {
-			betrag = betrag + zahl;
-		}
-		;
-		double quadratzahl = betrag * betrag;
-		return Math.sqrt(quadratzahl);
-	}
-
 	private static double BetragBerechnenVektor(Vektor vektor) {
 		double betrag = 0;
 
@@ -322,7 +308,6 @@ public class Rechner {
 		}
 
 		List<Matrix> matrixen = new ArrayList<Matrix>();
-		// 4x4 matrix erstellung
 		for (int i = 0; i < dimensionen; i++) {
 			Matrix neueMatrix = new Matrix();
 			for (int a = 0; a < dimensionen; a++) {
@@ -511,12 +496,10 @@ public class Rechner {
 			double einzelwert = gerade2.StuetsVectorParameter.Werte.get(i) - gerade1.StuetsVectorParameter.Werte.get(i);
 			gleichungen.get(i).add(einzelwert);
 		}
-		
 		List<Double> zwischengleichung = new ArrayList<>();		
 		for (int i = 0; i < 3; i++) {
 			zwischengleichung.add(gleichungen.get(1).get(i));
 		}
-
 		double wert1 = gleichungen.get(0).get(1);
 		double wert2 = gleichungen.get(1).get(1);
 		
@@ -529,11 +512,9 @@ public class Rechner {
 		double r = gleichungen.get(0).get(0) / gleichungen.get(0).get(2);
 		double s = gleichungen.get(1).get(0) * r - gleichungen.get(1).get(2);
 		s = s / gleichungen.get(1).get(1);
-		
 		if(r == s) {
 			return true;
 		}
-		
 		return false;
 	}
 }
